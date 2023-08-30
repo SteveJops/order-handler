@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+
+  web:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: start-entrypoint.sh
+    env_file:
+      - .env
+    volumes:
+      - ./:/app/
+    ports:
+      - 1337:8000
+    depends_on:
+      - db
+      - redis
+
+  db:
+    image: postgres:15
+    env_file:
+      - .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - 5432:5432
+
+  redis:
+    image: redis:alpine
+
+  celery:
+    build: 
+      context: .
+      dockerfile: ./Dockerfile
+    command: worker-entrypoint.sh
+    env_file:
+      - .env
+    volumes:
+      - ./:/app/
+    depends_on:
+      - redis
+
+  celery-beat:
+    build: 
+      context: .
+      dockerfile: ./Dockerfile
+    command: beat-entrypoint.sh
+    env_file:
+      - .env
+    volumes:
+      - ./:/app/
+    depends_on:
+      - redis
+
+volumes:
+  postgres_data:
