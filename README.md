@@ -68,7 +68,7 @@ The second is to run the app without buiding docker containers.
 
         cd {path_to_project_directory}
 
-        dir (to check everythin is okay)
+        dir (to check everything is okay)
 
         
     if linux:
@@ -81,7 +81,7 @@ The second is to run the app without buiding docker containers.
 
         cd {path_to_project_directory}
 
-        ls -l\a (to check everythin is okay)
+        ls -l\a (to check everything is okay)
 
     pip install -r requirements.txt
 
